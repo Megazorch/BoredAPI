@@ -1,0 +1,5 @@
+### Bored API Wrapper Configuration Settings
+---
+
+bored:
+    database_url: postgresql://roman:roman@localhost/bored
