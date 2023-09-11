@@ -2,6 +2,7 @@
 Main file that connects to Bored API and returns a list of 5 activities and save them to PostgreSQL database.
 """
 from bored_functions import BoredApiManager
+from bored_database import BoredApiDatabase
 import bored_arg_parse
 
 
@@ -16,14 +17,28 @@ def main():
     args = vars(arguments)
     print(args)
 
-    # Create an instance of the BoredApiManager class with the specified activity_type
-    manager = BoredApiManager(args)
+    # Create an instance of the BoredApiDatabase class
+    database = BoredApiDatabase(args)
 
-    # Get an activity
-    activity = manager.get_activity()
+    if args['action'] == 'new':
 
-    # Print the activity JSON to the console
-    print(activity)
+        # Create an instance of the BoredApiManager class
+        manager = BoredApiManager(args)
+
+        # Get an activity
+        activity = manager.get_activity()
+
+        # Print the activity JSON to the console
+        print(activity)
+
+        # Add activity to database
+        database.insert_activity()
+
+    elif args['action'] == 'list':
+
+        # List all activities from database
+        database.list_activities()
+
 
 
 if __name__ == "__main__":

@@ -28,6 +28,3 @@ class BoredApiManager:
 
         except Exception as e:
             return {"error": f"An error occurred: {str(e)}"}
-
-
-
