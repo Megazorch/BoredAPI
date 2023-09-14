@@ -13,8 +13,9 @@ class ActivityRepository:
         """
         Return a database connection.
         """
-        self.connection = psycopg.connect(database=database_name, user=user_name, password=password)
-        return self.connection
+        path_to_db = f"dbname={database_name} user={user_name} password={password} host=localhost"
+        connection = psycopg.connect(path_to_db)
+        return connection
 
     def create_table(self):
         """
