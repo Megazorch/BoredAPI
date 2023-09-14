@@ -35,7 +35,7 @@ class ActivityRepository:
                             accessibility REAL NOT NULL,
                             UNIQUE (key))"""
                            )
-            self.connection.commit()
+            connection.commit()
 
     def save(self, activity: Activity):
         """
