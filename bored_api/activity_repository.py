@@ -7,11 +7,6 @@ class ActivityRepository:
     """
     Class to manage database connection and CRUD operations.
     """
-    def __init__(self):
-        """
-        Create a database connection.
-        """
-        # self.response_data = [data for data in response_data.values()]
 
         # self.database_name = os.getenv('DB_NAME')
         # self.user_name = os.getenv('DB_USER')
