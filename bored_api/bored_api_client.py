@@ -4,21 +4,21 @@ Main functions for the API
 import requests
 
 
-class BoredApiManager:
+class BoredApiClient:
     """
     Class for the Bored API
     """
-    def __init__(self, parameters=None):
-        self.parameters = parameters
+    base_url = "https://www.boredapi.com/api/"
 
-    def get_activity(self):
+    def get_activity(self,  parameters: dict = None) -> dict:
         """
-        Download image.
+        Get an activity from the Bored API
         :return r.json():
         """
-        url = "https://www.boredapi.com/api/activity"
+        url = self.base_url + "activity"
+
         try:
-            response = requests.get(url, params=self.parameters)
+            response = requests.get(url, params=parameters)
 
             if response.status_code == 200:
                 activity_data = response.json()
