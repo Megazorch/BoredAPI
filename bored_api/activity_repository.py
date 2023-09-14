@@ -8,12 +8,8 @@ class ActivityRepository:
     Class to manage database connection and CRUD operations.
     """
 
-        # self.database_name = os.getenv('DB_NAME')
-        # self.user_name = os.getenv('DB_USER')
-        # self.password = os.getenv('DB_PASS')
-        self.connection = None
-
-    def get_connection(self, database_name: str, user_name: str, password: str) -> psycopg.Connection:
+    @staticmethod
+    def get_connection(database_name: str, user_name: str, password: str) -> psycopg.Connection:
         """
         Return a database connection.
         """
