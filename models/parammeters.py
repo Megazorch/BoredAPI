@@ -39,3 +39,15 @@ class GetActivityParams:
                f"accessibility: {self.accessibility}, " \
                f"minaccessibility: {self.minaccessibility}, " \
                f"maxaccessibility: {self.maxaccessibility}"
+
+    def to_dict(self):
+        return {
+            "type": self.activity_type,
+            "participants": self.participants,
+            "price": self.price,
+            "minprice": self.minprice,
+            "maxprice": self.maxprice,
+            "accessibility": self.accessibility,
+            "minaccessibility": self.minaccessibility,
+            "maxaccessibility": self.maxaccessibility
+        }
