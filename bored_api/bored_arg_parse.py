@@ -8,25 +8,25 @@ def create_parser():
     """
     Get argument if exists and returns them.
     """
-    # my_program new --type education --participants 1 --price_min 0.1 --price_max 30 --accessibility_min 0.1 --accessibility_max 0.5
-    def check_positive(value):
+
+    def check_positive(value: int) -> int:
         """
         Check if value is a positive integer.
         :param value:
-        :return:
+        :return value:
         """
         try:
             value = int(value)
             if value <= 0:
-                raise argparse.ArgumentTypeError("{} is not a positive integer".format(value))
-        except ValueError:
-            raise Exception("{} is not an integer".format(value))
+                raise argparse.ArgumentTypeError(f"{value} is not a positive integer")
+        except ValueError as exc:
+            print(f"Error: {exc}")
         return value
 
     parser = argparse.ArgumentParser(
                         prog='Wrapper for Bored API',
-                        description='Gets a random activity from Bored API or finds one by parameter. ',
-                        usage='bored_main.py',
+                        description='Gets a random activity from Bored API or finds one by parameter.',  # pylint:  disable=line-too-long
+                        usage='main.py',
                         epilog='For more information contact me by email: megazorch@gmail.com')
 
     subparsers = parser.add_subparsers(dest='action',
@@ -39,6 +39,7 @@ def create_parser():
                             type=str,
                             choices=["education", "recreational", "social", "diy", "charity",
                                      "cooking", "relaxation", "music", "busywork"],
+                            dest='activity_type',
                             default=None)
 
     new_parser.add_argument('--participants',
