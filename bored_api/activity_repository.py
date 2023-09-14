@@ -17,7 +17,8 @@ class ActivityRepository:
         connection = psycopg.connect(path_to_db)
         return connection
 
-    def create_table(self):
+    @staticmethod
+    def create_table(connection):
         """
         Create a table.
         """
