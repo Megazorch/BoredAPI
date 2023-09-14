@@ -22,7 +22,7 @@ class ActivityRepository:
         """
         Create a table.
         """
-        with self.connection.cursor() as cursor:
+        with connection.cursor() as cursor:
             cursor.execute("""
                             CREATE TABLE IF NOT EXISTS activities (
                             id SERIAL PRIMARY KEY,
