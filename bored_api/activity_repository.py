@@ -1,22 +1,29 @@
 import os
 import psycopg
+from models.activity import Activity
 
 
-class BoredApiDatabase:
+class ActivityRepository:
     """
     Class to manage database connection and CRUD operations.
     """
-    def __init__(self, response_data):
+    def __init__(self):
         """
         Create a database connection.
-        :param response_data:
         """
-        self.response_data = [data for data in response_data.values()]
+        # self.response_data = [data for data in response_data.values()]
 
-        self.database_name = os.getenv('DB_NAME')
-        self.user_name = os.getenv('DB_USER')
-        self.password = os.getenv('DB_PASS')
-        self.connection = psycopg.connect(database=self.database_name, user=self.user_name, password=self.password)
+        # self.database_name = os.getenv('DB_NAME')
+        # self.user_name = os.getenv('DB_USER')
+        # self.password = os.getenv('DB_PASS')
+        self.connection = None
+
+    def get_connection(self, database_name: str, user_name: str, password: str) -> psycopg.Connection:
+        """
+        Return a database connection.
+        """
+        self.connection = psycopg.connect(database=database_name, user=user_name, password=password)
+        return self.connection
 
     def create_table(self):
         """
@@ -37,7 +44,7 @@ class BoredApiDatabase:
                            )
             self.connection.commit()
 
-    def insert_activity(self, response_data):
+    def save(self, activity: Activity):
         """
         Insert an activity into the database.
         """
@@ -45,14 +52,14 @@ class BoredApiDatabase:
             with self.connection.cursor() as cursor:
                 cursor.execute("""
                                 INSERT INTO activities (activity, type, participants, price, link, key, accessibility)
-                                VALUES (%s, %s, %s, %s, %s, %s, %s)""", response_data)
+                                VALUES (%s, %s, %s, %s, %s, %s, %s)""", Activity.to_tuple())
 
                 self.connection.commit()
                 return print("Activity added to database.")
         except psycopg.errors.DatabaseError:
             return print("Error adding activity to database.")
 
-    def select_all_activities(self):
+    def find_all(self):
         """
         Select all activities from the database.
         """
