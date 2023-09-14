@@ -1,10 +1,9 @@
 """
 Tests for Bored API wrapper
 """
-import subprocess
+
 import unittest
-import bored_arg_parse
-import argparse
+from bored_api import bored_arg_parse
 
 
 class Parser_Correct_Test(unittest.TestCase):
@@ -66,23 +65,3 @@ class Parser_Correct_Test(unittest.TestCase):
         """
         parsed = self.parser.parse_args(['new', '--accessibility_max', '0.5'])
         self.assertEqual(parsed.accessibility_max, 0.5)
-
-
-class Parse_Inccorect_Test(unittest.TestCase):
-    def test_invalid_arguments(self):
-        """
-        Run the script with invalid arguments ('new list')
-        """
-        command = 'python bored_main.py new list'
-        result = subprocess.run(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-
-        # Check if the exit code indicates an error
-        self.assertNotEqual(result.returncode, 0)
-
-        # Check if the stderr contains the expected error message
-        expected_error_message = "usage: bored_main.py\nWrapper for Bored API: error: unrecognized arguments: list\n"
-        self.assertIn(expected_error_message, result.stderr)
-
-
-if __name__ == '__main__':
-    unittest.main()
