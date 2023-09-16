@@ -3,7 +3,7 @@ from models.activity import Activity
 
 
 class ActivityObjectTest(unittest.TestCase):
-    def SetUp(self):
+    def setUp(self):
         self.activity_data = {
             "action": "new",
             "type": "music",
