@@ -79,7 +79,7 @@ class ActivityRepository:
                                             %(link)s,
                                             %(key)s,
                                             %(accessibility)s);
-                                            """, activity.dict())
+                                            """, activity.activity_data)
 
                     # print(f"Activity added to database.")
                     cursor.execute("SELECT * FROM activities ORDER BY created_at DESC LIMIT 1;")
