@@ -11,11 +11,16 @@ class ActivityObjectTest(unittest.TestCase):
             "price": 0,
             "link": "www.youtube.com",
             "key": "key"
-
         }
+
     def test_activity_object_creation(self):
-        activity = Activity()
-        self.assertEqual(True, False)  # add assertion here
+        """
+        Testing Activity object
+        :return:
+        """
+        activity = Activity(self.activity_data)
+        self.assertEqual(activity.dict(), self.activity_data)
+        self.assertEqual(activity.activity_data['action'], "new")
 
 
 if __name__ == '__main__':
