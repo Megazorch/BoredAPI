@@ -30,14 +30,14 @@ class ActivityRepository:
         except psycopg.errors.DatabaseError:
             return f'Error connecting to database "{database_name}".'
 
-    @staticmethod
-    def create_table(connection):
+    def create_table(self) -> str:
         """
         Create a table.
         """
-        with connection.cursor() as cursor:
-            cursor.execute("""
-                            CREATE TABLE IF NOT EXISTS activities (
+        with self.connection.cursor() as cursor:
+            try:
+                cursor.execute("""
+                            CREATE TABLE activities (
                             id SERIAL PRIMARY KEY,
                             activity TEXT NOT NULL,
                             type VARCHAR(15) NOT NULL,
@@ -46,9 +46,15 @@ class ActivityRepository:
                             link TEXT,
                             key TEXT NOT NULL,
                             accessibility REAL NOT NULL,
-                            UNIQUE (key))"""
-                           )
-            connection.commit()
+                            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                            UNIQUE (key));"""
+                               )
+            except psycopg.errors.DuplicateTable:
+                self.connection.rollback()
+                return f"Table has already created."
+
+            self.connection.commit()
+            return f"Table has been created."
 
     def save(self, activity: Activity):
         """
