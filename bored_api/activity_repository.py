@@ -60,16 +60,45 @@ class ActivityRepository:
         """
         Insert an activity into the database.
         """
+
         try:
             with self.connection.cursor() as cursor:
-                cursor.execute("""
-                                INSERT INTO activities (activity, type, participants, price, link, key, accessibility)
-                                VALUES (%s, %s, %s, %s, %s, %s, %s)""", Activity.to_tuple())
+                # Execute the SQL query to check if the table exists
+                cursor.execute(
+                    f"SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'activities')")
 
-                self.connection.commit()
-                return print("Activity added to database.")
+                # Fetch the result
+                table_exists = cursor.fetchone()[0]
+
+                if table_exists is True:
+                    cursor.execute("""
+                                    INSERT INTO activities (activity, type, participants, price, link, key, accessibility)
+                                    VALUES (%(activity)s,
+                                            %(type)s,
+                                            %(participants)s,
+                                            %(price)s,
+                                            %(link)s,
+                                            %(key)s,
+                                            %(accessibility)s);
+                                            """, activity.dict())
+
+                    print(f"Activity added to database.")
+
+                    cursor.execute("SELECT * FROM activities ORDER BY created_at DESC LIMIT 1;")
+                    new_activity = cursor.fetchall()
+                    # Print the result
+                    self.message_to_user(new_activity)
+                    return f"Activity added to database."
+                else:
+                    self.create_table()
+                    self.save(activity)     # recursive call to save the activity
+                    print(f"Activity added to database.")
+                    return f"Activity added to database."
         except psycopg.errors.DatabaseError:
             return print("Error adding activity to database.")
+            self.connection.rollback()
+            print(f"Error adding activity to database.")
+            return f"Error adding activity to database."
 
     def find_all(self):
         """
