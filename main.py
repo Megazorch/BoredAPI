@@ -1,14 +1,15 @@
 """
 Main file that connects to Bored API and returns a list of 5 activities and save them to PostgreSQL database.
 """
+import os
+from dotenv import load_dotenv
+
 from bored_api.activity_repository import ActivityRepository
 from bored_api.bored_api_client import BoredApiClient
 from bored_api.bored_arg_parse import create_parser
 from models.activity import Activity
 from models.parammeters import GetActivityParams
 
-import os
-from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
