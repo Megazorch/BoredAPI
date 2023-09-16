@@ -16,14 +16,19 @@ class ActivityRepository:
                         "{link:<55} {key:<10} {accessibility:<15}" +
                         "{created_at:<10}\n").format(**dict(zip(self.key, self.value)))
 
-    @staticmethod
-    def get_connection(database_name: str, user_name: str, password: str) -> psycopg.Connection:
+    def connect(self,
+                database_name: str,
+                user_name: str,
+                password: str):
         """
-        Return a database connection.
+        Create a connection to the PostgreSQL database.
         """
         path_to_db = f"dbname={database_name} user={user_name} password={password} host=localhost"
-        connection = psycopg.connect(path_to_db)
-        return connection
+        try:
+            self.connection = psycopg.connect(path_to_db)
+            return f'Successfully connected to database "{database_name}".'
+        except psycopg.errors.DatabaseError:
+            return f'Error connecting to database "{database_name}".'
 
     @staticmethod
     def create_table(connection):
