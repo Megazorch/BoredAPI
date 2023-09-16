@@ -81,17 +81,18 @@ class ActivityRepository:
                                             %(accessibility)s);
                                             """, activity.dict())
 
-                    print(f"Activity added to database.")
-
+                    # print(f"Activity added to database.")
                     cursor.execute("SELECT * FROM activities ORDER BY created_at DESC LIMIT 1;")
                     new_activity = cursor.fetchall()
+                    self.connection.commit()
+
                     # Print the result
                     self.message_to_user(new_activity)
                     return f"Activity added to database."
                 else:
                     self.create_table()
                     self.save(activity)     # recursive call to save the activity
-                    print(f"Activity added to database.")
+                    # print(f"Activity added to database.")
                     return f"Activity added to database."
         except psycopg.errors.DatabaseError:
             self.connection.rollback()
