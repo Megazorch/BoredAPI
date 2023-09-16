@@ -95,10 +95,25 @@ class ActivityRepository:
                     print(f"Activity added to database.")
                     return f"Activity added to database."
         except psycopg.errors.DatabaseError:
-            return print("Error adding activity to database.")
             self.connection.rollback()
             print(f"Error adding activity to database.")
             return f"Error adding activity to database."
+
+    def message_to_user(self, cursor_data: tuple) -> None:
+        """
+        Return the message to the user.
+        """
+        for row in cursor_data:
+            row = dict(zip(self.key, row))
+
+            # Convert the date to a string
+            row['created_at'] = row['created_at'].strftime("%Y-%m-%d %H:%M:%S")
+
+            self.message += ("{id:<3} {activity:50} {type:<15} {participants:<12} {price:<6} {link:<55}" +
+                             "{key:<10} {accessibility:<15}" +
+                             "{created_at:<10}\n").format(**row)
+
+        return print(self.message)
 
     def find_all(self):
         """
