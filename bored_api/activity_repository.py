@@ -50,10 +50,10 @@ class ActivityRepository:
                                )
             except psycopg.errors.DuplicateTable:
                 self.connection.rollback()
-                return f"Table has already created."
+                return f"The table 'activities' has already been created."
 
             self.connection.commit()
-            return f"Table has been created."
+            return f"The table 'activities' created."
 
     def save(self, activity: Activity):
         """
