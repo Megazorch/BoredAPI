@@ -71,7 +71,8 @@ class ActivityRepository:
 
                 if table_exists is True:
                     cursor.execute("""
-                                    INSERT INTO activities (activity, type, participants, price, link, key, accessibility)
+                                    INSERT INTO activities (activity, type, participants,
+                                                            price, link, key, accessibility)
                                     VALUES (%(activity)s,
                                             %(type)s,
                                             %(participants)s,
