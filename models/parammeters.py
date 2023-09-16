@@ -41,6 +41,10 @@ class GetActivityParams:
                f"maxaccessibility: {self.maxaccessibility}"
 
     def to_dict(self):
+        """
+        Return the parameters as a dictionary.
+        :return:
+        """
         return {
             "type": self.activity_type,
             "participants": self.participants,
