@@ -26,35 +26,34 @@ def main():
 
     # Convert Namespace object to dictionary and store in object
     params = GetActivityParams(**vars(arguments))
-    print(params.activity_type,  params.participants)
 
     # Create an instance of the ActivityRepository class
-    database = ActivityRepository
+    database = ActivityRepository()
 
     # Get connection to database
-    database.get_connection(database_name=database_name,
-                            user_name=user_name,
-                            password=password)
-"""
+    database.connect(database_name=database_name,
+                     user_name=user_name,
+                     password=password)
+
     if params.action == 'new':
 
-        # Create an instance of the BoredApiManager class
+        # Create an instance of the BoredApiClient class
         client = BoredApiClient()
 
         # Get an activity
         activity = client.get_activity(params.to_dict())
 
         # Store activity in Activity class
-        activity_obj = Activity(**activity)
+        activity = Activity(activity)
 
         # Add activity to database
-        database.insert_activity()
+        database.save(activity)
 
-    elif args['action'] == 'list':
+    elif params.action == 'list':
 
         # List all activities from database
-        database.list_activities()
-"""
+        database.find_last_five()
+
 
 if __name__ == "__main__":
     # Get environment variables from .env file
