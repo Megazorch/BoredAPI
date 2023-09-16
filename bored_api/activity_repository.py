@@ -1,6 +1,7 @@
 import os
 import psycopg
 from models.activity import Activity
+from prettytable import PrettyTable
 
 
 class ActivityRepository:
@@ -10,11 +11,9 @@ class ActivityRepository:
     def __init__(self):
         # Initialize the connection as None
         self.connection = None
-        self.key = ['id', 'activity', 'type', 'participants', 'price', 'link', 'key', 'accessibility', 'created_at']
-        self.value = ['№', 'Activity', 'Type', 'Participants', 'Price', 'Link', 'Key', 'Accessibility', 'Created at']
-        self.message = ("{id:<3} {activity:<50} {type:<15} {participants:<12} {price:<6}" +
-                        "{link:<55} {key:<10} {accessibility:<15}" +
-                        "{created_at:<10}\n").format(**dict(zip(self.key, self.value)))
+        self.console_table = PrettyTable()
+        self.console_table.field_names = ['№', 'Activity', 'Type', 'Participants', 'Price', 'Link', 'Key',
+                                          'Accessibility', 'Created at']
 
     def connect(self,
                 database_name: str,
@@ -104,16 +103,12 @@ class ActivityRepository:
         Return the message to the user.
         """
         for row in cursor_data:
-            row = dict(zip(self.key, row))
+            row = list(row)
+            # row[-1] is the created_at column
+            row[-1] = row[-1].strftime('%Y-%m-%d %H:%M:%S')
+            self.console_table.add_row(row)
 
-            # Convert the date to a string
-            row['created_at'] = row['created_at'].strftime("%Y-%m-%d %H:%M:%S")
-
-            self.message += ("{id:<3} {activity:50} {type:<15} {participants:<12} {price:<6} {link:<55}" +
-                             "{key:<10} {accessibility:<15}" +
-                             "{created_at:<10}\n").format(**row)
-
-        return print(self.message)
+        return print(self.console_table)
 
     def find_all(self):
         """
