@@ -7,6 +7,14 @@ class ActivityRepository:
     """
     Class to manage database connection and CRUD operations.
     """
+    def __init__(self):
+        # Initialize the connection as None
+        self.connection = None
+        self.key = ['id', 'activity', 'type', 'participants', 'price', 'link', 'key', 'accessibility', 'created_at']
+        self.value = ['№', 'Activity', 'Type', 'Participants', 'Price', 'Link', 'Key', 'Accessibility', 'Created at']
+        self.message = ("{id:<3} {activity:<50} {type:<15} {participants:<12} {price:<6}" +
+                        "{link:<55} {key:<10} {accessibility:<15}" +
+                        "{created_at:<10}\n").format(**dict(zip(self.key, self.value)))
 
     @staticmethod
     def get_connection(database_name: str, user_name: str, password: str) -> psycopg.Connection:
