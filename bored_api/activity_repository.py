@@ -121,5 +121,18 @@ class ActivityRepository:
         """
         with self.connection.cursor() as cursor:
             cursor.execute("""
-                            SELECT * FROM activities""")
-            return cursor.fetchall()
+                            SELECT * FROM activities;""")
+            all_activities = cursor.fetchall()
+
+            return self.message_to_user(all_activities)
+
+    def find_last_five(self):
+        """
+        Select last five activities from the database.
+        """
+        with self.connection.cursor() as cursor:
+            cursor.execute("""
+                            SELECT * FROM activities ORDER BY created_at DESC LIMIT 5;""")
+            last_five_activities = cursor.fetchall()
+
+            return self.message_to_user(last_five_activities)
