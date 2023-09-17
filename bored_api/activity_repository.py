@@ -100,14 +100,14 @@ class ActivityRepository:
 
         all_activities = cur.fetchall()
 
-    def find_last_five(self):
         return all_activities
 
+    def find_last_five(self) -> list[tuple]:
         """
         Select last five activities from the database.
         """
-        with self.connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM activities ORDER BY created_at DESC LIMIT 5;")
-            last_five_activities = cursor.fetchall()
+        cur = self.connection.execute("SELECT * FROM activities ORDER BY created_at DESC LIMIT 5;")
 
-            return self.message_to_user(last_five_activities)
+        last_five_activities = cur.fetchall()
+
+        return last_five_activities
