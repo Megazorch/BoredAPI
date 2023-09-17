@@ -92,19 +92,17 @@ class ActivityRepository:
         except psycopg.errors.DatabaseError:
             self.connection.rollback()
 
-        return print(self.console_table)
-
-    def find_all(self):
+    def find_all(self) -> list[tuple]:
         """
         Select all activities from the database.
         """
-        with self.connection.cursor() as cursor:
-            cursor.execute("SELECT * FROM activities;")
-            all_activities = cursor.fetchall()
+        cur = self.connection.execute("SELECT * FROM activities;")
 
-            return self.message_to_user(all_activities)
+        all_activities = cur.fetchall()
 
     def find_last_five(self):
+        return all_activities
+
         """
         Select last five activities from the database.
         """
