@@ -3,7 +3,6 @@ Repository that save and retrieve data from PostgreSQL database.
 """
 import psycopg
 from models.activity import Activity
-from prettytable import PrettyTable
 
 
 class ActivityRepository:
@@ -13,9 +12,6 @@ class ActivityRepository:
     def __init__(self):
         # Initialize the connection as None
         self.connection = None
-        self.console_table = PrettyTable()
-        self.console_table.field_names = ['№', 'Activity', 'Type', 'Participants', 'Price', 'Link', 'Key',
-                                          'Accessibility', 'Created at']
 
     def connect(self,
                 database_name: str,
