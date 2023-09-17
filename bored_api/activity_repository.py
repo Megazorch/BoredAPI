@@ -1,4 +1,6 @@
-import os
+"""
+Repository that save and retrieve data from PostgreSQL database.
+"""
 import psycopg
 from models.activity import Activity
 from prettytable import PrettyTable
