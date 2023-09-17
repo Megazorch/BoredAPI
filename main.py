@@ -9,6 +9,7 @@ from bored_api.bored_api_client import BoredApiClient
 from bored_api.bored_arg_parse import create_parser
 from models.activity import Activity
 from models.parammeters import GetActivityParams
+from models.console_printer import ConsolePrinter
 
 
 # Load environment variables
@@ -48,12 +49,18 @@ def main():
         activity = Activity(activity)
 
         # Add activity to database
-        database.save(activity)
+        new_activity = database.save(activity)
+
+        # Print message to the console
+        console_printer.message_to_user(new_activity)
 
     elif params.action == 'list':
 
-        # List all activities from database
-        database.find_last_five()
+        # List last 5 activities from database
+        last_five_activities = database.find_last_five()
+
+        # Print last 5 activities from database to the console
+        console_printer.message_to_user(last_five_activities)
 
 
 if __name__ == "__main__":
@@ -61,5 +68,8 @@ if __name__ == "__main__":
     user_name = os.getenv('DB_USER')
     password = os.getenv('DB_PASS')
     database_name = os.getenv('DB_NAME')
+
+    # Create an instance of the ConsolePrinter class
+    console_printer = ConsolePrinter()
 
     main()
