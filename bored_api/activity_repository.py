@@ -53,7 +53,7 @@ class ActivityRepository:
             self.connection.commit()
             return f"The table 'activities' created."
 
-    def save(self, activity: Activity):
+    def save(self, activity: Activity) -> list[tuple]:
         """
         Insert an activity into the database.
         """
@@ -80,33 +80,17 @@ class ActivityRepository:
                                             %(accessibility)s);
                                             """, activity.activity_data)
 
-                    # print(f"Activity added to database.")
                     cursor.execute("SELECT * FROM activities ORDER BY created_at DESC LIMIT 1;")
                     new_activity = cursor.fetchall()
-                    self.connection.commit()
 
-                    # Print the result
-                    self.message_to_user(new_activity)
-                    return f"Activity added to database."
+                    self.connection.commit()
+                    return new_activity
                 else:
                     self.create_table()
                     self.save(activity)     # recursive call to save the activity
-                    # print(f"Activity added to database.")
-                    return f"Activity added to database."
+
         except psycopg.errors.DatabaseError:
             self.connection.rollback()
-            print(f"Error adding activity to database.")
-            return f"Error adding activity to database."
-
-    def message_to_user(self, cursor_data: tuple) -> None:
-        """
-        Return the message to the user.
-        """
-        for row in cursor_data:
-            row = list(row)
-            # row[-1] is the created_at column
-            row[-1] = row[-1].strftime('%Y-%m-%d %H:%M:%S')
-            self.console_table.add_row(row)
 
         return print(self.console_table)
 
