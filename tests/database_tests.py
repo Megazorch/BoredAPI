@@ -20,16 +20,16 @@ class BoredApiClientTests(unittest.TestCase):
     Tests for `bored_api_client` package.
     """
     def setUp(self):
-        self.api = ActivityRepository()
-        self.api.connect(database_name=database_name,
-                         user_name=user_name,
-                         password=password)
+        self.repository = ActivityRepository()
+        self.repository.connect(database_name=database_name,
+                                user_name=user_name,
+                                password=password)
 
     def test_connection_to_database(self):
         """
         Test connection to database
         """
-        with self.api.connection as conn:
+        with self.repository.connection as conn:
             self.assertIsInstance(conn, psycopg.Connection)
 
     def test_create_table(self):
@@ -37,10 +37,10 @@ class BoredApiClientTests(unittest.TestCase):
         Test create table
         """
         try:
-            self.assertEqual(self.api.create_table(),
+            self.assertEqual(self.repository.create_table(),
                              f"Table has been created.")
         except Exception:
-            self.assertEqual(self.api.create_table(),
+            self.assertEqual(self.repository.create_table(),
                              f"Table has already created.")
 
     def test_save_activity(self):
@@ -55,20 +55,20 @@ class BoredApiClientTests(unittest.TestCase):
                              'key': 'test1',
                              'accessibility': 1})
 
-        self.assertEqual(self.api.save(activity), f"Activity added to database.")
+        self.assertEqual(self.repository.save(activity), f"Activity added to database.")
 
     def test_find_all(self):
         """
         Test find all activities
         """
-        for record in self.api.find_all():
+        for record in self.repository.find_all():
             self.assertIsInstance(record, tuple)
 
     def test_five_last(self):
         """
         Test find five latest activities
         """
-        print(self.api.find_last_five())
+        print(self.repository.find_last_five())
 
 
 if __name__ == '__main__':
