@@ -78,7 +78,13 @@ class ActivityRepository:
                                             %(link)s,
                                             %(key)s,
                                             %(accessibility)s);
-                                            """, activity.activity_data)
+                                            """, {'activity': activity.activity,
+                                                  'type': activity.activity_type,
+                                                  'participants': activity.participants,
+                                                  'price': activity.price,
+                                                  'link': activity.link,
+                                                  'key': activity.key,
+                                                  'accessibility': activity.accessibility})
 
                     cursor.execute("SELECT * FROM activities ORDER BY created_at DESC LIMIT 1;")
                     new_activity = cursor.fetchall()
