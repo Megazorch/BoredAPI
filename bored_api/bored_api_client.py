@@ -3,8 +3,10 @@ Main functions for the API
 """
 import requests
 import logging
+from bored_api.parammeters import GetActivityParams
 
 logger = logging.getLogger("bored_api")
+
 
 class BoredApiClient:
     """
@@ -12,7 +14,7 @@ class BoredApiClient:
     """
     base_url = "https://www.boredapi.com/api/"
 
-    def get_activity(self,  parameters: dict = None) -> dict:
+    def get_activity(self,  parameters: GetActivityParams) -> dict:
         """
         Get an activity from the Bored API
         :return r.json():
@@ -33,7 +35,5 @@ class BoredApiClient:
                 logger.info("Finished")
 
         except Exception as e:
-            logging.error(f"Failed to fetch activity. Error: {str(e)}")
-            logging.info("Finished")
             logger.error(f"Failed to fetch activity. Error: {str(e)}")
             logger.info("Finished")
