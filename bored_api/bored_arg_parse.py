@@ -90,7 +90,21 @@ def create_parser():
 
     # Subparser for the 'list' command with optional arguments
     subparsers.add_parser('list', help='List 5 last saved activities')
+    new_parser.add_argument('-v', '--verbose',
+                            action='store_true',
+                            help='Enable verbose mode')
+
+    # Subparser for the 'list' command
+    list_parser = subparsers.add_parser('list', help='List 5 last saved activities')
+
+    list_parser.add_argument('-v', '--verbose',
+                             action='store_true',
+                             help='Enable verbose mode')
+
 
     logger.info('Parser created')
+    create_table_parser.add_argument('-v', '--verbose',
+                                     action='store_true',
+                                     help='Enable verbose mode')
 
     return parser
