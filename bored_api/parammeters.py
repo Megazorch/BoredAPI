@@ -3,33 +3,24 @@ GetActivityParams class
 """
 import logging
 from typing import Optional
+from dataclasses import dataclass
 
 
+
+@dataclass
 class GetActivityParams:
     """
     Class to hold parameters for the get_activity method
     """
-
-    def __init__(self,
-                 action: Optional[str] = None,
-                 activity_type: Optional[str] = None,
-                 participants: Optional[int] = None,
-                 price: Optional[float] = None,
-                 minprice: Optional[float] = None,
-                 maxprice: Optional[float] = None,
-                 accessibility: Optional[float] = None,
-                 minaccessibility: Optional[float] = None,
-                 maxaccessibility: Optional[float] = None
-                 ):
-        self.action = action
-        self.activity_type = activity_type
-        self.participants = participants
-        self.price = price
-        self.minprice = minprice
-        self.maxprice = maxprice
-        self.accessibility = accessibility
-        self.minaccessibility = minaccessibility
-        self.maxaccessibility = maxaccessibility
+    action: Optional[str] = None,
+    activity_type: Optional[str] = None,
+    participants: Optional[int] = None,
+    price: Optional[float] = None,
+    minprice: Optional[float] = None,
+    maxprice: Optional[float] = None,
+    accessibility: Optional[float] = None,
+    minaccessibility: Optional[float] = None,
+    maxaccessibility: Optional[float] = None
 
         logging.info(f"Initialized GetActivityParams: {self}")
 
