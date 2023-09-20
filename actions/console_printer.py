@@ -29,3 +29,11 @@ class ConsolePrinter:
 
         logger.info('Message to user printed.')
         print(self.console_table)
+
+    @staticmethod
+    def error_response_from_api(error_message: dict) -> None:
+        """
+        Return the error message from the API.
+        """
+        logger.error(error_message['error'])
+        print(error_message['error'])
