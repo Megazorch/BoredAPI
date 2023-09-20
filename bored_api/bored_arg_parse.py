@@ -12,24 +12,24 @@ def create_parser():
     # Logging of parser
     logging.info('Creating parser')
 
-    def check_positive(value: int) -> int:
+    def check_value(value: str) -> float:
         """
         Check if value is a positive integer.
-        :param value:
-        :return value:
         """
         try:
-            value = int(value)
-            if value <= 0:
-                raise argparse.ArgumentTypeError(f"{value} is not a positive integer")
-        except ValueError as exc:
-            print(f"Error: {exc}")
+            value = float(value)
+            if value < 0:
                 logging.error(f"{value} is not a positive number")
                 logging.info("Finished")
+                raise argparse.ArgumentTypeError(f"{value} is not a positive number")
+            elif value > 1:
                 logging.error(f"{value} is not a number between 0 and 1")
                 logging.info("Finished")
+                raise argparse.ArgumentTypeError(f"{value} is not a number between 0 and 1")
+        except ValueError or TypeError as exc:
             logging.error(f"'{value}' is not a number")
             logging.info("Finished")
+            raise argparse.ArgumentTypeError(f"'{value}' is not a number")
         return value
 
     parser = argparse.ArgumentParser(
@@ -52,46 +52,47 @@ def create_parser():
                             default=None)
 
     new_parser.add_argument('--participants',
-                            type=check_positive,
+                            type=int,
+                            choices=range(0, 6),
                             metavar='[0, n]',
                             help='The number of people that this activity could involve',
                             default=None)
 
     new_parser.add_argument('--price',
-                            type=float,
+                            type=check_value,
                             help='A factor describing the cost of the event with zero being free',
                             metavar='[0.0, 1.0]',
                             default=None)
 
     new_parser.add_argument('--price_min',
-                            type=float,
+                            type=check_value,
                             help='A factor describing the minimal cost of the event (goes with --price_max)',
                             metavar='[0.0, 1.0]',
                             dest='minprice',
                             default=None)
 
     new_parser.add_argument('--price_max',
-                            type=float,
+                            type=check_value,
                             help='A factor describing the maximum cost of the event (goes with --price_min)',
                             metavar='[0.0, 1.0]',
                             dest='maxprice',
                             default=None)
 
     new_parser.add_argument('--accessibility',
-                            type=float,
+                            type=check_value,
                             help='A factor describing how possible an event is to do with zero being the most accessible',
                             metavar='[0.0, 1.0]',
                             default=None)
 
     new_parser.add_argument('--accessibility_min',
-                            type=float,
+                            type=check_value,
                             help='A factor describing minimum accessibility of an event (goes with --accessibility_max)',
                             metavar='[0.0, 1.0]',
                             dest='minaccessibility',
                             default=None)
 
     new_parser.add_argument('--accessibility_max',
-                            type=float,
+                            type=check_value,
                             help='A factor describing maximum accessibility of an event (goes with --accessibility_min)',
                             metavar='[0.0, 1.0]',
                             dest='maxaccessibility',
