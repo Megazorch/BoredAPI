@@ -88,8 +88,6 @@ def create_parser():
                             dest='maxaccessibility',
                             default=None)
 
-    # Subparser for the 'list' command with optional arguments
-    subparsers.add_parser('list', help='List 5 last saved activities')
     new_parser.add_argument('-v', '--verbose',
                             action='store_true',
                             help='Enable verbose mode')
@@ -101,8 +99,9 @@ def create_parser():
                              action='store_true',
                              help='Enable verbose mode')
 
+    # Subparser for the 'create-table' command
+    create_table_parser = subparsers.add_parser('create-table', help='Create table in PostgreSQL database')
 
-    logger.info('Parser created')
     create_table_parser.add_argument('-v', '--verbose',
                                      action='store_true',
                                      help='Enable verbose mode')
