@@ -20,12 +20,7 @@ def main():
     """
     Main function.
     """
-    # Set logging configuration
-    logging.basicConfig(filename='bored_api.log',
-                        level=logging.INFO,
-                        format='%(asctime)s:%(levelname)s: %(message)s',
-                        datefmt='%d-%m-%Y %H:%M:%S')
-    logging.info('Started')
+    logger.info('Started')
 
     # Create a parser object
     parser = create_parser()
@@ -85,4 +80,21 @@ if __name__ == "__main__":
     # Create an instance of the ConsolePrinter class
     console_printer = ConsolePrinter()
 
+    # Create a logger
+    logger = logging.getLogger('bored_api')
+    logger.setLevel(logging.CRITICAL)
+
+    # Create a console handler
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.DEBUG)
+
+    # Create a formatter
+    formatter = logging.Formatter(fmt='%(asctime)s: %(levelname)s - %(message)s',
+                                  datefmt='%d-%b-%y %H:%M:%S')
+    ch.setFormatter(formatter)
+
+    # Add handlers to the logger
+    logger.addHandler(ch)
+
+    # Start main function
     main()
