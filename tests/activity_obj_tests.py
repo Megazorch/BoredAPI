@@ -1,5 +1,5 @@
 import unittest
-from models.activity import Activity
+from database.activity import Activity
 
 
 class ActivityObjectTest(unittest.TestCase):
