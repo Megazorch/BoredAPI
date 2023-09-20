@@ -2,17 +2,12 @@
 Code to parse arguments
 """
 import argparse
-import logging
 
-logger = logging.getLogger("bored_api")
 
 def create_parser():
     """
     Get argument if exists and returns them.
     """
-    # Logging of parser
-    logger.info('Creating parser')
-
     def check_value(value: str) -> float:
         """
         Check if value is a positive integer.
@@ -20,16 +15,10 @@ def create_parser():
         try:
             value = float(value)
             if value < 0:
-                logger.error(f"{value} is not a positive number")
-                logger.info("Finished")
                 raise argparse.ArgumentTypeError(f"{value} is not a positive number")
             elif value > 1:
-                logger.error(f"{value} is not a number between 0 and 1")
-                logger.info("Finished")
                 raise argparse.ArgumentTypeError(f"{value} is not a number between 0 and 1")
         except ValueError or TypeError as exc:
-            logger.error(f"'{value}' is not a number")
-            logger.info("Finished")
             raise argparse.ArgumentTypeError(f"'{value}' is not a number")
         return value
 
@@ -103,4 +92,5 @@ def create_parser():
     subparsers.add_parser('list', help='List 5 last saved activities')
 
     logger.info('Parser created')
+
     return parser
