@@ -4,6 +4,7 @@ Main functions for the API
 import requests
 import logging
 
+logger = logging.getLogger("bored_api")
 
 class BoredApiClient:
     """
@@ -19,18 +20,20 @@ class BoredApiClient:
         url = self.base_url + "activity"
 
         try:
-            logging.info("Fetching activity from Bored API")
-            logging.debug(f"Fetching activity from Bored API with parameters: {parameters}")
-            response = requests.get(url, params=parameters)
+            logger.info("Fetching activity from Bored API")
+            logger.debug(f"Fetching activity from Bored API with parameters: {parameters}")
+            response = requests.get(url, params=parameters.to_dict())
 
             if response.status_code == 200:
                 activity_data = response.json()
-                logging.info(f"Fetched activity from Bored API: {activity_data}")
+                logger.info(f"Fetched activity from Bored API: {activity_data}")
                 return activity_data
             else:
-                logging.error(f"Failed to fetch activity. Status code: {response.status_code}")
-                logging.info("Finished")
+                logger.error(f"Failed to fetch activity. Status code: {response.status_code}")
+                logger.info("Finished")
 
         except Exception as e:
             logging.error(f"Failed to fetch activity. Error: {str(e)}")
             logging.info("Finished")
+            logger.error(f"Failed to fetch activity. Error: {str(e)}")
+            logger.info("Finished")
