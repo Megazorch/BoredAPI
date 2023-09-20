@@ -44,31 +44,22 @@ def main():
         # Create an instance of the BoredApiClient class
         client = BoredApiClient()
 
-        # Get an activity
-        activity = client.get_activity(params.to_dict())
-        print(activity)
-        # Store activity in Activity class
-        activity = Activity(activity)
+        # Create an instance of the NewAction class
+        action = NewAction(client=client,
+                           repository=database,
+                           printer=console_printer)
 
-        # Add activity to database
-        new_activity = database.save(activity)
-
-        # Print message to the console
-        console_printer.message_to_user(new_activity)
-
-        # Finish logging
-        logging.info('Finished')
+        # Call the NewAction class
+        action(params)
 
     elif params.action == 'list':
 
-        # List last 5 activities from database
-        last_five_activities = database.find_last_five()
+        # Create an instance of the ListAction class
+        action = ListAction(repository=database,
+                            printer=console_printer)
 
-        # Print last 5 activities from database to the console
-        console_printer.message_to_user(last_five_activities)
-
-        # Finish logging
-        logging.info('Finished')
+        # Call the ListAction class
+        action(params)
 
 
 if __name__ == "__main__":
