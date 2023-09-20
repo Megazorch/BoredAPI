@@ -2,12 +2,15 @@
 Code to parse arguments
 """
 import argparse
+import logging
 
 
 def create_parser():
     """
     Get argument if exists and returns them.
     """
+    # Logging of parser
+    logging.info('Creating parser')
 
     def check_positive(value: int) -> int:
         """
@@ -21,6 +24,12 @@ def create_parser():
                 raise argparse.ArgumentTypeError(f"{value} is not a positive integer")
         except ValueError as exc:
             print(f"Error: {exc}")
+                logging.error(f"{value} is not a positive number")
+                logging.info("Finished")
+                logging.error(f"{value} is not a number between 0 and 1")
+                logging.info("Finished")
+            logging.error(f"'{value}' is not a number")
+            logging.info("Finished")
         return value
 
     parser = argparse.ArgumentParser(
@@ -91,4 +100,5 @@ def create_parser():
     # Subparser for the 'list' command with optional arguments
     subparsers.add_parser('list', help='List 5 last saved activities')
 
+    logging.info('Parser created')
     return parser
