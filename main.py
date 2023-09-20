@@ -2,6 +2,7 @@
 Main file that connects to Bored API and returns a list of 5 activities and save them to PostgreSQL database.
 """
 import os
+import logging
 from dotenv import load_dotenv
 
 from bored_api.activity_repository import ActivityRepository
@@ -20,6 +21,13 @@ def main():
     """
     Main function.
     """
+    # Set logging configuration
+    logging.basicConfig(filename='bored_api.log',
+                        level=logging.INFO,
+                        format='%(asctime)s:%(levelname)s: %(message)s',
+                        datefmt='%d-%m-%Y %H:%M:%S')
+    logging.info('Started')
+
     # Create a parser object
     parser = create_parser()
 
@@ -44,7 +52,7 @@ def main():
 
         # Get an activity
         activity = client.get_activity(params.to_dict())
-
+        print(activity)
         # Store activity in Activity class
         activity = Activity(activity)
 
@@ -54,6 +62,9 @@ def main():
         # Print message to the console
         console_printer.message_to_user(new_activity)
 
+        # Finish logging
+        logging.info('Finished')
+
     elif params.action == 'list':
 
         # List last 5 activities from database
@@ -61,6 +72,9 @@ def main():
 
         # Print last 5 activities from database to the console
         console_printer.message_to_user(last_five_activities)
+
+        # Finish logging
+        logging.info('Finished')
 
 
 if __name__ == "__main__":
