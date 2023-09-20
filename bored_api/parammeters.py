@@ -13,15 +13,16 @@ class GetActivityParams:
     """
     Class to hold parameters for the get_activity method
     """
-    action: Optional[str] = None,
-    activity_type: Optional[str] = None,
-    participants: Optional[int] = None,
-    price: Optional[float] = None,
-    minprice: Optional[float] = None,
-    maxprice: Optional[float] = None,
-    accessibility: Optional[float] = None,
-    minaccessibility: Optional[float] = None,
+    action: Optional[str] = None
+    activity_type: Optional[str] = None
+    participants: Optional[int] = None
+    price: Optional[float] = None
+    minprice: Optional[float] = None
+    maxprice: Optional[float] = None
+    accessibility: Optional[float] = None
+    minaccessibility: Optional[float] = None
     maxaccessibility: Optional[float] = None
+    verbose: bool = False
 
     logger.info("Initialized GetActivityParams")
 
