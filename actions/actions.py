@@ -35,8 +35,16 @@ class NewAction:
             # Add activity to database
             new_activity = self.repository.save(activity)
 
-            # Print message to the console
-            self.printer.message_to_user(new_activity)
+            if new_activity is None:
+                # Retrieve existing activity from database by key
+                new_activity = self.repository.find_by_key(activity.key)
+
+                self.printer.message_to_user(new_activity)
+
+            else:
+
+                # Print message to the console
+                self.printer.message_to_user(new_activity)
 
             # Finish logging
             logger.info('Finished')
