@@ -45,13 +45,18 @@ def main():
     """
     Main function.
     """
-    logger.info('Started')
-
     # Create a parser object
     parser = create_parser()
 
     # Get Namespace object from parser
     arguments = parser.parse_args()
+
+    # Configure logging based on --verbose option
+    configure_logging(arguments.verbose)
+
+    logger = logging.getLogger("bored_api")
+
+    logger.info('Started')
 
     # Convert Namespace object to dictionary and store in object
     params = GetActivityParams(**vars(arguments))
@@ -86,6 +91,12 @@ def main():
         # Call the ListAction class
         action(params)
 
+    elif params.action == 'create-table':
+
+        database.create_table()
+
+        logger.info('Finished')
+
 
 if __name__ == "__main__":
     # Get environment variables from .env file
@@ -95,22 +106,6 @@ if __name__ == "__main__":
 
     # Create an instance of the ConsolePrinter class
     console_printer = ConsolePrinter()
-
-    # Create a logger
-    logger = logging.getLogger('bored_api')
-    logger.setLevel(logging.CRITICAL)
-
-    # Create a console handler
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.DEBUG)
-
-    # Create a formatter
-    formatter = logging.Formatter(fmt='%(asctime)s: %(levelname)s - %(message)s',
-                                  datefmt='%d-%b-%y %H:%M:%S')
-    ch.setFormatter(formatter)
-
-    # Add handlers to the logger
-    logger.addHandler(ch)
 
     # Start main function
     main()
