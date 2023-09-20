@@ -30,7 +30,7 @@ class Activity:
             self.key = None
             self.accessibility = None
 
-        logger.info(f"Initialized Activity: {self}")
+        logger.info(f"Initialized Activity:\n{self}")
 
     def __str__(self) -> str:
         """
@@ -45,5 +45,5 @@ class Activity:
                    f"Price: {self.price}\n" \
                    f"Link: {self.link}\n" \
                    f"Key: {self.key}\n" \
-                   f"Accessibility: {self.accessibility}\n"
+                   f"Accessibility: {self.accessibility}"
 
