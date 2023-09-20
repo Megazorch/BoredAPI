@@ -3,6 +3,7 @@ Activity instance
 """
 import logging
 
+logger = logging.getLogger("bored_api")
 
 class Activity:
     """
@@ -26,7 +27,7 @@ class Activity:
             self.key = None
             self.accessibility = None
 
-        logging.info(f"Initialized Activity: {self}")
+        logger.info(f"Initialized Activity: {self}")
 
     def __str__(self) -> str:
         """
