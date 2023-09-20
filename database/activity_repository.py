@@ -4,6 +4,7 @@ Repository that save and retrieve data from PostgreSQL database.
 import psycopg
 import logging
 from models.activity import Activity
+logger = logging.getLogger("bored_api")
 
 
 class ActivityRepository:
@@ -14,7 +15,7 @@ class ActivityRepository:
         # Initialize the connection as None
         self.connection = None
 
-        logging.info('Initialized ActivityRepository')
+        logger.info('Initialized ActivityRepository')
 
     def connect(self,
                 database_name: str,
@@ -26,9 +27,9 @@ class ActivityRepository:
         path_to_db = f"dbname={database_name} user={user_name} password={password} host=localhost"
         try:
             self.connection = psycopg.connect(path_to_db)
-            logging.info(f'Successfully connected to database "{database_name}".')
+            logger.info(f'Successfully connected to database "{database_name}".')
         except psycopg.errors.DatabaseError:
-            logging.error(f'Did not managed to connect to database "{database_name}".')
+            logger.error(f'Did not managed to connect to database "{database_name}".')
 
     def create_table(self) -> str:
         """
@@ -51,10 +52,10 @@ class ActivityRepository:
                                )
             except psycopg.errors.DuplicateTable:
                 self.connection.rollback()
-                logging.warning("The table 'activities' has already been created.")
+                logger.warning("The table 'activities' has already been created.")
 
             self.connection.commit()
-            logging.info("The table 'activities' - created.")
+            logger.info("The table 'activities' - created.")
 
     def save(self, activity: Activity) -> list[tuple]:
         """
@@ -93,18 +94,18 @@ class ActivityRepository:
                     new_activity = cursor.fetchall()
 
                     self.connection.commit()
-                    logging.info(f"Activity {activity.activity} - inserted.")
+                    logger.info(f"Activity {activity.activity} - inserted.")
 
                     return new_activity
                 else:
-                    logging.warning("The table 'activities' does not exist. Creating it now.")
+                    logger.warning("The table 'activities' does not exist. Creating it now.")
                     self.create_table()
                     self.save(activity)     # recursive call to save the activity
 
         except psycopg.errors.DatabaseError:
             self.connection.rollback()
-            logging.error("Did not managed to insert the activity.")
-            logging.info("Finished")
+            logger.error("Did not managed to insert the activity.")
+            logger.info("Finished")
 
     def find_all(self) -> list[tuple]:
         """
@@ -124,6 +125,6 @@ class ActivityRepository:
 
         last_five_activities = cur.fetchall()
 
-        logging.info(f"Last five activities: {last_five_activities}")
+        logger.info(f"Last five activities: {last_five_activities}")
 
         return last_five_activities
