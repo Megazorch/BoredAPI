@@ -37,3 +37,16 @@ class BoredApiClient:
         except Exception as e:
             logger.error(f"Failed to fetch activity. Error: {str(e)}")
             logger.info("Finished")
+
+    @staticmethod
+    def check_activity(activity: dict) -> bool:
+        """
+        Check the response from the Bored API
+        :return bool:
+        """
+        keys = activity.keys()
+
+        if "activity" in keys:
+            return True
+        elif "error" in keys:
+            return False
