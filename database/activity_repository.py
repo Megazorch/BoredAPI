@@ -3,7 +3,8 @@ Repository that save and retrieve data from PostgreSQL database.
 """
 import psycopg
 import logging
-from models.activity import Activity
+from database.activity import Activity
+
 logger = logging.getLogger("bored_api")
 
 
