@@ -1,7 +1,7 @@
 """
 Activity instance
 """
-from typing import Optional
+import logging
 
 
 class Activity:
@@ -25,6 +25,8 @@ class Activity:
             self.link = None
             self.key = None
             self.accessibility = None
+
+        logging.info(f"Initialized Activity: {self}")
 
     def __str__(self) -> str:
         """
