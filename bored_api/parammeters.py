@@ -5,6 +5,7 @@ import logging
 from typing import Optional
 from dataclasses import dataclass
 
+logger = logging.getLogger("bored_api")
 
 
 @dataclass
@@ -22,7 +23,7 @@ class GetActivityParams:
     minaccessibility: Optional[float] = None,
     maxaccessibility: Optional[float] = None
 
-        logging.info(f"Initialized GetActivityParams: {self}")
+    logger.info("Initialized GetActivityParams")
 
     def __str__(self):
         return f"activity_type: {self.activity_type}, " \
