@@ -1,6 +1,7 @@
 """
 GetActivityParams class
 """
+import logging
 from typing import Optional
 
 
@@ -29,6 +30,8 @@ class GetActivityParams:
         self.accessibility = accessibility
         self.minaccessibility = minaccessibility
         self.maxaccessibility = maxaccessibility
+
+        logging.info(f"Initialized GetActivityParams: {self}")
 
     def __str__(self):
         return f"activity_type: {self.activity_type}, " \
