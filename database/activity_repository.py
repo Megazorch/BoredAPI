@@ -60,58 +60,47 @@ class ActivityRepository:
                 logger.warning("The table 'activities' already exists.")
                 print("The table 'activities' already exists.")
 
-            self.connection.commit()
-            logger.info("The table 'activities' - created.")
-
-    def save(self, activity: Activity) -> list[tuple]:
+    def save(self, activity: Activity) -> list[tuple] or None:
         """
         Insert an activity into the database.
         """
 
         try:
             with self.connection.cursor() as cursor:
-                # Execute the SQL query to check if the table exists
-                cursor.execute(
-                    f"SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'activities')")
 
-                # Fetch the result
-                table_exists = cursor.fetchone()[0]
+                cursor.execute("""
+                                INSERT INTO activities (activity, type, participants,
+                                                        price, link, key, accessibility)
+                                VALUES (%(activity)s,
+                                        %(type)s,
+                                        %(participants)s,
+                                        %(price)s,
+                                        %(link)s,
+                                        %(key)s,
+                                        %(accessibility)s);
+                                        """, {'activity': activity.activity,
+                                              'type': activity.activity_type,
+                                              'participants': activity.participants,
+                                              'price': activity.price,
+                                              'link': activity.link,
+                                              'key': activity.key,
+                                              'accessibility': activity.accessibility})
 
-                if table_exists is True:
-                    cursor.execute("""
-                                    INSERT INTO activities (activity, type, participants,
-                                                            price, link, key, accessibility)
-                                    VALUES (%(activity)s,
-                                            %(type)s,
-                                            %(participants)s,
-                                            %(price)s,
-                                            %(link)s,
-                                            %(key)s,
-                                            %(accessibility)s);
-                                            """, {'activity': activity.activity,
-                                                  'type': activity.activity_type,
-                                                  'participants': activity.participants,
-                                                  'price': activity.price,
-                                                  'link': activity.link,
-                                                  'key': activity.key,
-                                                  'accessibility': activity.accessibility})
+                # Get the last inserted activity from the database with time stamp
+                cursor.execute("SELECT * FROM activities ORDER BY created_at DESC LIMIT 1;")
+                new_activity = cursor.fetchall()
 
-                    cursor.execute("SELECT * FROM activities ORDER BY created_at DESC LIMIT 1;")
-                    new_activity = cursor.fetchall()
+                self.connection.commit()
+                logger.info(f"Activity: {activity.activity} - inserted.")
 
-                    self.connection.commit()
-                    logger.info(f"Activity {activity.activity} - inserted.")
+                return new_activity
 
-                    return new_activity
-                else:
-                    logger.warning("The table 'activities' does not exist. Creating it now.")
-                    self.create_table()
-                    self.save(activity)     # recursive call to save the activity
-
-        except psycopg.errors.DatabaseError:
+        except psycopg.errors.UniqueViolation:
             self.connection.rollback()
-            logger.error("Did not managed to insert the activity.")
-            logger.info("Finished")
+
+            logger.warning(f"Activity: {activity.activity} - already exists.")
+
+            return None
 
     def find_all(self) -> list[tuple]:
         """
