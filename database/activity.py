@@ -2,9 +2,12 @@
 Activity instance
 """
 import logging
+from dataclasses import dataclass
 
 logger = logging.getLogger("bored_api")
 
+
+@dataclass
 class Activity:
     """
     Activity class
