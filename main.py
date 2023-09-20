@@ -16,6 +16,31 @@ from actions.actions import NewAction, ListAction
 load_dotenv()
 
 
+# Configure logging
+def configure_logging(verbose):
+    """
+    Configure logging.
+
+    :param verbose:
+    :return:
+    """
+    # Create a logger
+    logger = logging.getLogger('bored_api')
+    logger.setLevel(logging.DEBUG if verbose else logging.ERROR)
+
+    # Create a console handler
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.DEBUG)
+
+    # Create a formatter
+    formatter = logging.Formatter(fmt='%(asctime)s: %(levelname)s - %(message)s',
+                                  datefmt='%d-%b-%y %H:%M:%S')
+    ch.setFormatter(formatter)
+
+    # Add handlers to the logger
+    logger.addHandler(ch)
+
+
 def main():
     """
     Main function.
