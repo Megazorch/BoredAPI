@@ -32,7 +32,7 @@ class ActivityRepository:
         except psycopg.errors.DatabaseError:
             logger.error(f'Did not managed to connect to database "{database_name}".')
 
-    def create_table(self) -> str:
+    def create_table(self) -> None:
         """
         Create a table.
         """
@@ -51,9 +51,14 @@ class ActivityRepository:
                             created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                             UNIQUE (key));"""
                                )
+                self.connection.commit()
+                logger.info("The table 'activities' - created.")
+                print("The table 'activities' is successfully created.")
+
             except psycopg.errors.DuplicateTable:
                 self.connection.rollback()
-                logger.warning("The table 'activities' has already been created.")
+                logger.warning("The table 'activities' already exists.")
+                print("The table 'activities' already exists.")
 
             self.connection.commit()
             logger.info("The table 'activities' - created.")
