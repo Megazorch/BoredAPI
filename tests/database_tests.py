@@ -1,8 +1,8 @@
 """
 Tests for `bored_api_client` package.
 """
-from bored_api.activity_repository import ActivityRepository
-from models.activity import Activity
+from database.activity_repository import ActivityRepository
+from database.activity import Activity
 from dotenv import load_dotenv
 import psycopg
 import unittest
