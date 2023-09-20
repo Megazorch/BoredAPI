@@ -5,13 +5,12 @@ import os
 import logging
 from dotenv import load_dotenv
 
-from bored_api.activity_repository import ActivityRepository
-from bored_api.bored_api_client import BoredApiClient
+from actions.console_printer import ConsolePrinter
 from bored_api.bored_arg_parse import create_parser
-from models.activity import Activity
-from models.parammeters import GetActivityParams
-from models.console_printer import ConsolePrinter
-
+from bored_api.parammeters import GetActivityParams
+from bored_api.bored_api_client import BoredApiClient
+from database.activity_repository import ActivityRepository
+from actions.actions import NewAction, ListAction
 
 # Load environment variables
 load_dotenv()
