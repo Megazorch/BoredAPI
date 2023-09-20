@@ -120,6 +120,16 @@ class ActivityRepository:
 
         last_five_activities = cur.fetchall()
 
-        logger.info(f"Last five activities: {last_five_activities}")
+        logger.debug(f"Last five activities: {last_five_activities}")
 
         return last_five_activities
+
+    def find_by_key(self, key: str) -> list[tuple]:
+        """
+        Select activity by key from the database.
+        """
+        cur = self.connection.execute("SELECT * FROM activities WHERE key = %(key)s;", {'key': key})
+
+        activity = cur.fetchall()
+
+        return activity
