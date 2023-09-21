@@ -60,7 +60,7 @@ class ActivityRepository:
                 logger.warning("The table 'activities' already exists.")
                 print("The table 'activities' already exists.")
 
-    def save(self, activity: Activity) -> list[tuple] or None:
+    def save(self, activity: Activity) -> list[tuple]:
         """
         Insert an activity into the database.
         """
@@ -100,7 +100,7 @@ class ActivityRepository:
 
             logger.warning(f"Activity: {activity.activity} - already exists.")
 
-            return None
+            return [()]
 
     def find_all(self) -> list[tuple]:
         """

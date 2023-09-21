@@ -23,9 +23,10 @@ class ConsolePrinter:
         Return the message to the user.
         """
         for row in cursor_data:
-            row = list(row)
-            row[-1] = row[-1].strftime('%Y-%m-%d %H:%M:%S')     # row[-1] is the created_at column
-            self.console_table.add_row(row)
+            row_as_list = list(row)
+            print(row)
+            row_as_list[-1] = row_as_list[-1].strftime('%Y-%m-%d %H:%M:%S')     # row[-1] is the created_at column
+            self.console_table.add_row(row_as_list)
 
         logger.info('Message to user printed.')
         print(self.console_table)

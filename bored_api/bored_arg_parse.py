@@ -13,16 +13,16 @@ def create_parser():
         Check if value is a positive integer.
         """
         try:
-            value = float(value)
-            if value < 0:
+            value_as_float = float(value)
+            if value_as_float < 0:
                 raise argparse.ArgumentTypeError(f"{value} is not a positive number")
-            if value > 1:
+            if value_as_float > 1:
                 raise argparse.ArgumentTypeError(f"{value} is not a number between 0 and 1")
         except ValueError as exc:
             raise argparse.ArgumentTypeError(f"'{value}' is not a number") from exc
         except TypeError as exc:
             raise argparse.ArgumentTypeError(f"'{value}' is not a number") from exc
-        return value
+        return value_as_float
 
     parser = argparse.ArgumentParser(
                         prog='Wrapper for Bored API',

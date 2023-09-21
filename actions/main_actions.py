@@ -30,14 +30,15 @@ class NewAction:
 
         if activity_check is True:
             # Store activity in Activity class
-            activity = Activity(activity)
+            activity_object = Activity(activity)
 
             # Add activity to database
-            new_activity = self.repository.save(activity)
+            new_activity = self.repository.save(activity_object)
 
-            if new_activity is None:
+            # Check if new_activity is empty
+            if len(new_activity) == 1:
                 # Retrieve existing activity from database by key
-                new_activity = self.repository.find_by_key(activity.key)
+                new_activity = self.repository.find_by_key(activity_object.key)
 
                 self.printer.message_to_user(new_activity)
 
