@@ -133,3 +133,14 @@ class ActivityRepository:
         activity = cur.fetchall()
 
         return activity
+
+    def clear_table(self) -> None:
+        """
+        Delete all activities from the database.
+        """
+        with self.connection.cursor() as cursor:
+            cursor.execute("DELETE FROM activities;")
+            self.connection.commit()
+
+            logger.info("The table 'activities' - cleared.")
+            print("The table 'activities' is successfully cleared.")
