@@ -12,23 +12,14 @@ class Activity:
     """
     Activity class
     """
-    def __init__(self, activity_data: dict = None):
-        try:
-            self.activity = activity_data['activity']
-            self.activity_type = activity_data['type']
-            self.participants = activity_data['participants']
-            self.price = activity_data['price']
-            self.link = activity_data['link']
-            self.key = activity_data['key']
-            self.accessibility = activity_data['accessibility']
-        except KeyError or TypeError:
-            self.activity = None
-            self.activity_type = None
-            self.participants = None
-            self.price = None
-            self.link = None
-            self.key = None
-            self.accessibility = None
+    def __init__(self, activity_data: dict):
+        self.activity = activity_data['activity']
+        self.activity_type = activity_data['type']
+        self.participants = activity_data['participants']
+        self.price = activity_data['price']
+        self.link = activity_data['link']
+        self.key = activity_data['key']
+        self.accessibility = activity_data['accessibility']
 
         logger.info(f"Initialized Activity:\n{self}")
 
