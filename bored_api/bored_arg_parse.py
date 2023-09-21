@@ -16,10 +16,12 @@ def create_parser():
             value = float(value)
             if value < 0:
                 raise argparse.ArgumentTypeError(f"{value} is not a positive number")
-            elif value > 1:
+            if value > 1:
                 raise argparse.ArgumentTypeError(f"{value} is not a number between 0 and 1")
-        except ValueError or TypeError as exc:
-            raise argparse.ArgumentTypeError(f"'{value}' is not a number")
+        except ValueError as exc:
+            raise argparse.ArgumentTypeError(f"'{value}' is not a number") from exc
+        except TypeError as exc:
+            raise argparse.ArgumentTypeError(f"'{value}' is not a number") from exc
         return value
 
     parser = argparse.ArgumentParser(

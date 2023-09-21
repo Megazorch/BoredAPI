@@ -1,8 +1,8 @@
 """
 Repository that save and retrieve data from PostgreSQL database.
 """
-import psycopg
 import logging
+import psycopg
 from database.activity import Activity
 
 logger = logging.getLogger("bored_api")

@@ -1,7 +1,14 @@
-import unittest, os
+"""
+Test class for ConsolePrinter class
+"""
+import unittest
+import os
+
 from dotenv import load_dotenv
-from database.activity import Activity
+
 from actions.console_printer import ConsolePrinter
+
+from database.activity import Activity
 from database.activity_repository import ActivityRepository
 
 # Load environment variables from .env file
@@ -17,16 +24,20 @@ class ConsolePrinterTest(unittest.TestCase):
     """
     def setUp(self):
         self.repository = ActivityRepository()
-        self.activity = Activity({'activity': 'test',
-                                  'type': 'test',
+        self.activity = Activity({'activity': 'test2',
+                                  'type': 'test2',
                                   'participants': 1,
                                   'price': 1,
-                                  'link': 'test',
-                                  'key': 'test1',
+                                  'link': 'test2',
+                                  'key': 'test3',
                                   'accessibility': 1})
         self.printer = ConsolePrinter()
 
     def test_message_to_user(self):
+        """
+        Test message_to_user method
+        :return:
+        """
         self.repository.connect(database_name=database_name,
                                 user_name=user_name,
                                 password=password)
@@ -39,6 +50,10 @@ class ConsolePrinterTest(unittest.TestCase):
         self.printer.message_to_user(new_activity)
 
     def test_error_response_from_api(self):
+        """
+        Test error_response_from_api method
+        :return:
+        """
         self.printer.error_response_from_api(
             {'error': 'test error'}
         )

@@ -1,3 +1,6 @@
+"""
+Test for GetActivityParams class
+"""
 import unittest
 from bored_api.parammeters import GetActivityParams
 
@@ -29,6 +32,9 @@ class GetActivityParamsTest(unittest.TestCase):
                        }
 
     def test_to_dict(self):
+        """
+        Test to_dict method
+        """
         parameters = GetActivityParams(**self.params)
         self.assertEqual(parameters.to_dict(), self.result)
 

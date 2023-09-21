@@ -1,9 +1,15 @@
+"""
+Unit tests for BoredApiClient class
+"""
 import unittest
 from bored_api.bored_api_client import BoredApiClient
 from bored_api.parammeters import GetActivityParams
 
 
 class BoredApiClientTest(unittest.TestCase):
+    """
+    Class for testing BoredApiClient class
+    """
     def setUp(self):
         self.bored_api_client = BoredApiClient()
         self.params = {'action': 'new',
@@ -19,6 +25,10 @@ class BoredApiClientTest(unittest.TestCase):
         self.get_activity_params = GetActivityParams(**self.params)
 
     def test_get_activity(self):
+        """
+        Test get_activity method
+        :return:
+        """
         activity = self.bored_api_client.get_activity(self.get_activity_params)
         self.assertIsNotNone(activity)
         self.assertIsNotNone(activity['activity'])
@@ -30,7 +40,11 @@ class BoredApiClientTest(unittest.TestCase):
         self.assertIsNotNone(activity['accessibility'])
 
     def test_check_activity(self):
-        activity = self.bored_api_client.get_activity(self.get_activity_params)
+        """
+        Test check_activity method
+        :return:
+        """
+        activity = self.bored_api_client.check_activity(self.get_activity_params)
         self.assertTrue(activity)
 
 

@@ -1,12 +1,16 @@
 """
 Tests for `bored_api_client` package.
 """
-from database.activity_repository import ActivityRepository
-from database.activity import Activity
-from dotenv import load_dotenv
-import psycopg
 import unittest
 import os
+
+import psycopg
+
+from dotenv import load_dotenv
+
+from database.activity import Activity
+from database.activity_repository import ActivityRepository
+
 
 # Load environment variables from .env file
 load_dotenv()

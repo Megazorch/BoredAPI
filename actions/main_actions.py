@@ -52,6 +52,7 @@ class NewAction:
         else:
             self.printer.error_response_from_api(activity)
 
+
 @dataclass
 class ListAction:
     """

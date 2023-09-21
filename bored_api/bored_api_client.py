@@ -1,8 +1,8 @@
 """
 Main functions for the API
 """
-import requests
 import logging
+import requests
 from bored_api.parammeters import GetActivityParams
 
 logger = logging.getLogger("bored_api")
@@ -21,22 +21,32 @@ class BoredApiClient:
         """
         url = self.base_url + "activity"
 
+        # Specify a timeout (in seconds)
+        timeout_seconds = 10
+
         try:
             logger.info("Fetching activity from Bored API")
             logger.debug(f"Fetching activity from Bored API with parameters: {parameters}")
-            response = requests.get(url, params=parameters.to_dict())
+            response = requests.get(url, params=parameters.to_dict(), timeout=timeout_seconds)
 
             if response.status_code == 200:
                 activity_data = response.json()
                 logger.info(f"Fetched activity from Bored API: {activity_data}")
                 return activity_data
-            else:
-                logger.error(f"Failed to fetch activity. Status code: {response.status_code}")
-                logger.info("Finished")
 
-        except Exception as e:
-            logger.error(f"Failed to fetch activity. Error: {str(e)}")
+            logger.error(f"Failed to fetch activity. Status code: {response.status_code}")
             logger.info("Finished")
+            return {}
+
+        except requests.Timeout:
+            logger.error(f"Request timed out after {timeout_seconds} seconds.")
+            logger.info("Finished")
+            return {}
+
+        except requests.RequestException as exc:
+            logger.error(f"Failed to fetch activity. Error: {str(exc)}")
+            logger.info("Finished")
+            return {}
 
     @staticmethod
     def check_activity(activity: dict) -> bool:
@@ -46,7 +56,4 @@ class BoredApiClient:
         """
         keys = activity.keys()
 
-        if "activity" in keys:
-            return True
-        elif "error" in keys:
-            return False
+        return True if "activity" in keys else False

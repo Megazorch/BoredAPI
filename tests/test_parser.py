@@ -7,6 +7,9 @@ from bored_api import bored_arg_parse
 
 
 class ParserTest(unittest.TestCase):
+    """
+    Class for testing the parser
+    """
     def setUp(self):
         self.parser = bored_arg_parse.create_parser()
 

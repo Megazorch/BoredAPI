@@ -3,14 +3,18 @@ Main file that connects to Bored API and returns a list of 5 activities and save
 """
 import os
 import logging
+
 from dotenv import load_dotenv
 
 from actions.console_printer import ConsolePrinter
+from actions.main_actions import NewAction, ListAction
+
 from bored_api.bored_arg_parse import create_parser
 from bored_api.parammeters import GetActivityParams
 from bored_api.bored_api_client import BoredApiClient
+
 from database.activity_repository import ActivityRepository
-from actions.actions import NewAction, ListAction
+
 
 # Load environment variables
 load_dotenv()
@@ -29,16 +33,16 @@ def configure_logging(verbose):
     logger.setLevel(logging.DEBUG if verbose else logging.ERROR)
 
     # Create a console handler
-    ch = logging.StreamHandler()
-    ch.setLevel(logging.DEBUG)
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.DEBUG)
 
     # Create a formatter
     formatter = logging.Formatter(fmt='%(asctime)s: %(levelname)s - %(message)s',
                                   datefmt='%d-%b-%y %H:%M:%S')
-    ch.setFormatter(formatter)
+    console_handler.setFormatter(formatter)
 
     # Add handlers to the logger
-    logger.addHandler(ch)
+    logger.addHandler(console_handler)
 
 
 def main():

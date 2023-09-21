@@ -1,8 +1,14 @@
+"""
+Test for Activity object
+"""
 import unittest
 from database.activity import Activity
 
 
 class ActivityObjectTest(unittest.TestCase):
+    """
+    Testing Activity object
+    """
     def setUp(self):
         self.activity_data = {
             "activity": "Write a song",
