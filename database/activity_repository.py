@@ -21,11 +21,14 @@ class ActivityRepository:
     def connect(self,
                 database_name: str,
                 user_name: str,
-                password: str):
+                password: str,
+                host: str = 'localhost',
+                port: str = '5432'
+                ):
         """
         Create a connection to the PostgreSQL database.
         """
-        path_to_db = f"dbname={database_name} user={user_name} password={password} host=localhost"
+        path_to_db = f"dbname={database_name} user={user_name} password={password} host={host} port={port}"
         try:
             self.connection = psycopg.connect(path_to_db)
             logger.info(f'Successfully connected to database "{database_name}".')
