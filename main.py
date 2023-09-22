@@ -71,7 +71,10 @@ def main():
     # Get connection to database
     database.connect(database_name=database_name,
                      user_name=user_name,
-                     password=password)
+                     password=password,
+                     host=host,
+                     port=port
+                     )
 
     if params.action == 'new':
 
@@ -107,6 +110,8 @@ if __name__ == "__main__":
     user_name = os.getenv('DB_USER')
     password = os.getenv('DB_PASS')
     database_name = os.getenv('DB_NAME')
+    host = os.getenv('DB_HOST')
+    port = os.getenv('DB_PORT')
 
     # Create an instance of the ConsolePrinter class
     console_printer = ConsolePrinter()
