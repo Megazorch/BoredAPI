@@ -26,7 +26,7 @@ def create_parser():
 
     parser = argparse.ArgumentParser(
                         prog='Wrapper for Bored API',
-                        description='Gets a random activity from Bored API or finds one by parameter.',  # pylint:  disable=line-too-long
+                        description='Gets a random activity from Bored API or finds one by parameter.',
                         usage='main.py',
                         epilog='For more information contact me by email: megazorch@gmail.com')
 
