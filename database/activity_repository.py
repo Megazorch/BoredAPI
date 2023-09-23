@@ -123,10 +123,17 @@ class ActivityRepository:
         cur = self.connection.execute("SELECT * FROM activities;")
 
         all_activities = cur.fetchall()
+        list_of_all_activities = []
 
-        return all_activities
+        for row in all_activities:
+            activity = Activity({'id': row[0], 'activity': row[1], 'type': row[2],
+                                 'participants': row[3], 'price': row[4], 'link': row[5],
+                                 'key': row[6], 'accessibility': row[7], 'created_at': row[8]})
+            list_of_all_activities.append(activity)
 
     def find_last_five(self) -> list[tuple]:
+        return list_of_all_activities
+
         """
         Select last five activities from the database.
         """
