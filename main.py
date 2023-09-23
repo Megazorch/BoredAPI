@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 from actions.console_printer import ConsolePrinter
 from actions.main_actions import NewAction, ListAction
 
-from bored_api.bored_arg_parse import create_parser
+from actions.bored_arg_parse import create_parser
 from bored_api.parammeters import GetActivityParams
 from bored_api.bored_api_client import BoredApiClient
 
