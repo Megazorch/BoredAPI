@@ -63,7 +63,7 @@ class ActivityRepository:
                 logger.warning("The table 'activities' already exists.")
                 print("The table 'activities' already exists.")
 
-    def save(self, activity: Activity) -> list[tuple]:
+    def save(self, activity: Activity) -> Activity:
         """
         Insert an activity into the database.
         """
@@ -81,6 +81,8 @@ class ActivityRepository:
                                         %(link)s,
                                         %(key)s,
                                         %(accessibility)s);
+                                        %(accessibility)s)
+                                RETURNING id, created_at;
                                         """, {'activity': activity.activity,
                                               'type': activity.activity_type,
                                               'participants': activity.participants,
@@ -89,14 +91,22 @@ class ActivityRepository:
                                               'key': activity.key,
                                               'accessibility': activity.accessibility})
 
-                # Get the last inserted activity from the database with time stamp
-                cursor.execute("SELECT * FROM activities ORDER BY created_at DESC LIMIT 1;")
-                new_activity = cursor.fetchall()
+                id_and_created_at = cursor.fetchone()
 
                 self.connection.commit()
-                logger.info(f"Activity: {activity.activity} - inserted.")
+                logger.info(f"Activity: {activity.activity} - inserted.\nReturn value: {id_and_created_at}")
 
-                return new_activity
+                updated_activity = Activity({'id': id_and_created_at[0],
+                                             'activity': activity.activity,
+                                             'type': activity.activity_type,
+                                             'participants': activity.participants,
+                                             'price': activity.price,
+                                             'link': activity.link,
+                                             'key': activity.key,
+                                             'accessibility': activity.accessibility,
+                                             'created_at': id_and_created_at[1]})
+
+                return updated_activity
 
         except psycopg.errors.UniqueViolation:
             self.connection.rollback()
