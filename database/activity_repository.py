@@ -131,19 +131,25 @@ class ActivityRepository:
                                  'key': row[6], 'accessibility': row[7], 'created_at': row[8]})
             list_of_all_activities.append(activity)
 
-    def find_last_five(self) -> list[tuple]:
         return list_of_all_activities
 
+    def find_last_five(self) -> list[Activity]:
         """
         Select last five activities from the database.
         """
         cur = self.connection.execute("SELECT * FROM activities ORDER BY created_at DESC LIMIT 5;")
 
         last_five_activities = cur.fetchall()
+        list_of_last_five_activities = []
 
-        logger.debug(f"Last five activities: {last_five_activities}")
+        for row in last_five_activities:
+            logger.debug(f"Last five activities: {row[1]}\n{row[2]}\n{row[3]}\n{row[4]}\n{row[5]}\n{row[6]}\n{row[7]}")
+            new_activity = Activity({'id': row[0], 'activity': row[1], 'type': row[2],
+                                     'participants': row[3], 'price': row[4], 'link': row[5],
+                                     'key': row[6], 'accessibility': row[7], 'created_at': row[8]})
+            list_of_last_five_activities.append(new_activity)
 
-        return last_five_activities
+        return list_of_last_five_activities
 
     def find_by_key(self, key: str) -> list[tuple]:
         """
