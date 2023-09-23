@@ -1,5 +1,39 @@
 # Technical Challenge for Juniors
 ## Bored API Wrapper - by Ivakhiv Roman
+### Running app via docker compose
+
+*Supposed that Docker is already installed on your machine.*
+
+1. Clone this repository to your local machine:
+```shell
+$ git clone https://github.com/Megazorch/BoredAPI.git
+```
+2. Create an `.env` file inside main directory and filled it as `.env.example`:
+```env
+DB_NAME=your_database_name
+DB_USER=user_name
+DB_PASS=password_to_your_database
+DB_HOST=db (if running via docker-compose) | localhost (if running locally)
+DB_PORT=5432
+DB_NAME_TEST=name_of_database_for_tests
+```
+3. Choose `DB_HOST=db` in your `.env`:
+4. To get a new **random** activity from Bored API just run:
+```shell
+$ docker compose run --rm bored_api new
+```
+5. Or add some options:
+```shell
+$ docker compose run --rm bored_api new --type music --price 0.0
+```
+6. To see more options just use `--help`:
+```shell
+$ docker compose run --rm bored_api new --help
+```
+7. If you wish to get the list of last five activities then run:
+```shell
+$ docker compose run --rm bored_api list
+```
 ### Running app locally
 
 *Supposed that Python is already installed on your machine.*
@@ -48,34 +82,7 @@ $ python main.py new --type education --participants 1 --price_min 0.1 --price_m
 ```shell
 $ python main.py list
 ```
-### Running app via docker compose
 
-1. Clone this repository to your local machine:
-```shell
-$ git clone https://github.com/Megazorch/BoredAPI.git
-```
-2. Create an `.env` file inside main directory and filled it as `.env.example`:
-```env
-DB_NAME=your_database_name
-DB_USER=user_name
-DB_PASS=password_to_your_database
-DB_HOST=db (if running via docker-compose) | localhost (if running locally)
-DB_PORT=5432
-DB_NAME_TEST=name_of_database_for_tests
-```
-3. Choose `DB_HOST=db` in your `.env`:
-4. To get a new **random** activity from Bored API just run:
-```shell
-$ docker compose run --rm bored_api new
-```
-5. Or add some options:
-```shell
-$ docker compose run --rm bored_api new --type music --price 0.0
-```
-6. If you wish to get the list of last five activities then run:
-```shell
-$ docker compose run --rm bored_api list
-```
 ## For your information
 Command `create_table` is used only for initialization of table call `activities`.
 
