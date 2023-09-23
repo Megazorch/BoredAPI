@@ -43,6 +43,12 @@ class Activity:
                f"Price: {self.price}\n" \
                f"Link: {self.link}\n" \
                f"Key: {self.key}\n" \
-               f"Accessibility: {self.accessibility}"
                f"Accessibility: {self.accessibility}\n" \
                f"Created at: {self.created_at}\n"
+
+    def to_list(self) -> list:
+        """
+        Return the activity data as a list.
+        """
+        return [self.id, self.activity, self.activity_type, self.participants,
+                self.price, self.link, self.key, self.accessibility, self.created_at]
