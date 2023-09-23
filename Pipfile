@@ -22,3 +22,6 @@ python_version = "3.11"
 
 [scripts]
 bored = "python main.py"
+test = "python -m unittest"
+doc_new = "docker compose run --rm bored_api new"
+doc_list = "docker compose run --rm bored_api list"
