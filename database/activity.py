@@ -20,6 +20,12 @@ class Activity:
         self.link = activity_data['link']
         self.key = activity_data['key']
         self.accessibility = activity_data['accessibility']
+        try:
+            self.id = activity_data['id']
+            self.created_at = activity_data['created_at']
+        except KeyError:
+            self.id = None
+            self.created_at = None
 
         logger.info(f"Initialized Activity:\n{self}")
 
@@ -30,10 +36,13 @@ class Activity:
         if self.activity is None:
             return "No activity data"
 
-        return f"Activity: {self.activity}\n" \
+        return f"id: {self.id}\n" \
+               f"Activity: {self.activity}\n" \
                f"Type: {self.activity_type}\n" \
                f"Participants: {self.participants}\n" \
                f"Price: {self.price}\n" \
                f"Link: {self.link}\n" \
                f"Key: {self.key}\n" \
                f"Accessibility: {self.accessibility}"
+               f"Accessibility: {self.accessibility}\n" \
+               f"Created at: {self.created_at}\n"
