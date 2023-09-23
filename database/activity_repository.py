@@ -151,15 +151,21 @@ class ActivityRepository:
 
         return list_of_last_five_activities
 
-    def find_by_key(self, key: str) -> list[tuple]:
+    def find_by_key(self, key: str) -> Activity:
         """
         Select activity by key from the database.
         """
+        logger.info(f'Looking for existing activity by key - {key}.')
+
         cur = self.connection.execute("SELECT * FROM activities WHERE key = %(key)s;", {'key': key})
 
-        activity = cur.fetchall()
+        activity = cur.fetchone()
 
-        return activity
+        updated_activity = Activity({'id': activity[0], 'activity': activity[1], 'type': activity[2],
+                                     'participants': activity[3], 'price': activity[4], 'link': activity[5],
+                                     'key': activity[6], 'accessibility': activity[7], 'created_at': activity[8]})
+
+        return updated_activity
 
     def clear_table(self) -> None:
         """
