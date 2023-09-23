@@ -67,10 +67,11 @@ class RepositoryTests(unittest.TestCase):
         Test save activity
         """
         new_activity = self.repository.save(self.activity)
-        new_activity = new_activity[0]
-        new_activity = [new_activity[i] for i in range(1, len(new_activity) - 1)]
 
-        self.assertEqual(new_activity,
+        self.assertEqual([new_activity.activity, new_activity.activity_type,
+                          new_activity.participants, new_activity.price,
+                          new_activity.link, new_activity.key,
+                          new_activity.accessibility],
                          ['test', 'test', 1, 1, 'test', 'test1', 1])
 
         self.repository.clear_table()
@@ -82,10 +83,13 @@ class RepositoryTests(unittest.TestCase):
         self.repository.save(self.activity)
 
         all_activities = self.repository.find_all()
-        all_activities = all_activities[0]
-        all_activities = [all_activities[i] for i in range(1, len(all_activities) - 1)]
 
-        self.assertEqual(all_activities,
+        activity = all_activities[0]
+
+        self.assertEqual([activity.activity, activity.activity_type,
+                          activity.participants, activity.price,
+                          activity.link, activity.key,
+                          activity.accessibility],
                          ['test', 'test', 1, 1, 'test', 'test1', 1])
 
         self.repository.clear_table()
@@ -97,10 +101,12 @@ class RepositoryTests(unittest.TestCase):
         self.repository.save(self.activity)
 
         all_activities = self.repository.find_last_five()
-        all_activities = all_activities[0]
-        all_activities = [all_activities[i] for i in range(1, len(all_activities) - 1)]
+        activity = all_activities[0]
 
-        self.assertEqual(all_activities,
+        self.assertEqual([activity.activity, activity.activity_type,
+                          activity.participants, activity.price,
+                          activity.link, activity.key,
+                          activity.accessibility],
                          ['test', 'test', 1, 1, 'test', 'test1', 1])
 
         self.repository.clear_table()

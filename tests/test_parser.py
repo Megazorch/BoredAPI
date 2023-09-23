@@ -3,7 +3,7 @@ Tests for Bored API wrapper
 """
 
 import unittest
-from bored_api import bored_arg_parse
+from actions import bored_arg_parse
 
 
 class ParserTest(unittest.TestCase):
