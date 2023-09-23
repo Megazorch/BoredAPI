@@ -80,7 +80,6 @@ class ActivityRepository:
                                         %(price)s,
                                         %(link)s,
                                         %(key)s,
-                                        %(accessibility)s);
                                         %(accessibility)s)
                                 RETURNING id, created_at;
                                         """, {'activity': activity.activity,
@@ -113,9 +112,11 @@ class ActivityRepository:
 
             logger.warning(f"Activity: {activity.activity} - already exists.")
 
-            return [()]
+            existing_activity = self.find_by_key(key=activity.key)
 
-    def find_all(self) -> list[tuple]:
+            return existing_activity
+
+    def find_all(self) -> list[Activity]:
         """
         Select all activities from the database.
         """
